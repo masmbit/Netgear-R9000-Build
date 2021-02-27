@@ -22,6 +22,7 @@ DEFAULT_PACKAGES += \
 	kmod-usb-ohci kmod-usb-ohci-pci kmod-usb2 kmod-usb2-pci kmod-usb3 kmod-usb-ledtrig-usbport \
 	kmod-ath10k-ct ath10k-firmware-qca9984-ct kmod-wil6210 \
 	kmod-usb-storage kmod-scsi-core kmod-fs-ext4 kmod-fs-btrfs kmod-fs-vfat kmod-fs-msdos block-mount \
+	kmod-al-eth \
 	cfdisk e2fsprogs badblocks partx-utils \
 	wpad-openssl uboot-envtools
 

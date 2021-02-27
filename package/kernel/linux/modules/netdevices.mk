@@ -1571,3 +1571,22 @@ define KernelPackage/mdio-gpio/description
 endef
 
 $(eval $(call KernelPackage,mdio-al-gpio))
+
+define KernelPackage/al-eth
+  SUBMENU:=$(NETWORK_DEVICES_MENU)
+  TITLE:=Annapurna Labs unified 1G/10G Ethernet driver
+  DEPENDS:=@PCI_SUPPORT @TARGET_alpine +kmod-mdio
+  KCONFIG:= \
+	CONFIG_NET_AL_ETH \
+	CONFIG_AL_ETH_ALLOC_FRAG=y \
+	CONFIG_AL_ETH_ALLOC_PAGE=n \
+	CONFIG_AL_ETH_ALLOC_SKB=n
+  FILES:=$(LINUX_DIR)/drivers/net/ethernet/al/al_eth_drv.ko
+  AUTOLOAD:=$(call AutoLoad,10,al-eth-drv,1)
+endef
+
+define KernelPackage/al-eth/description
+  Kernel modules for Annapurna Labs unified 1G/10G Ethernet driver
+endef
+
+$(eval $(call KernelPackage,al-eth))
