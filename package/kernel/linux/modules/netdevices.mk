@@ -1362,3 +1362,18 @@ define KernelPackage/mhi-wwan-mbim/description
 endef
 
 $(eval $(call KernelPackage,mhi-wwan-mbim))
+
+define KernelPackage/mdio-al-gpio
+  SUBMENU:=$(NETWORK_DEVICES_MENU)
+  TITLE:=Alpine MDIO GPIO bus controller
+  DEPENDS:=@TARGET_alpine +kmod-mdio
+  KCONFIG:=CONFIG_MDIO_AL_GPIO
+  FILES:=$(LINUX_DIR)/drivers/net/mdio/mdio-al-gpio.ko
+  AUTOLOAD:=$(call AutoLoad,11,mdio-al-gpio,1)
+endef
+
+define KernelPackage/mdio-gpio/description
+ Supports Alpine MDIO GPIO bus controller
+endef
+
+$(eval $(call KernelPackage,mdio-al-gpio))
