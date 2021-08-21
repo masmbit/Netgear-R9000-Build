@@ -1011,6 +1011,50 @@
 	};
 };
 
+/*
+ * Switch configuration
+ *
+ * There are two switches: master and slave.
+ *
+ * Ports P0 and P5 of the master switch are connected to the CPU ports
+ * ETH1 and ETH2, respectively. u-boot sets up trunking for master's
+ * ports P0 and P5 (TRUNK0). We need to revert this because ETH1 shall
+ * be used for LAN and ETH2 for WAN.
+ *
+ * Ports P4 and P6 of the master switch are connected with ports P5 and P0
+ * of the slave switch, respectively. These ports are set up into trunks:
+ *   - P4 and P6 into TRUNK1 on the master switch
+ *   - P5 and P0 into TRUNK0 on the slave switch
+ *
+ * Master switch:
+ *   - P0: CPU ETH1
+ *   - P1: LAN2
+ *   - P2: LAN1
+ *   - P3: WAN
+ *   - P4: connected to slave's P5
+ *   - P5: CPU ETH2
+ *   - P6: connected to slave's P0
+ *
+ * Slave switch:
+ *   - P0: connected to master's P6
+ *   - P1: LAN6
+ *   - P2: LAN5
+ *   - P3: LAN4
+ *   - P4: LAN3
+ *   - P5: connected to master's P4
+ *   - P6: -
+ *
+ * Trunk means Link Aggregation (LAG). A switch supports up to 4 trunks.
+ *
+ * References:
+ *   - https://raw.githubusercontent.com/Deoptim/atheros/master/QCA8337-datasheet.pdf
+ *   - https://kb.netgear.com/2649/NETGEAR-Open-Source-Code-for-Programmers-GPL
+ *     - package/base-files/files/lib/cfgmgr/enet.sh
+ *     - git_home/u-boot.git/board/annapurna-labs/alpine_hw29765235p0p512p1024p4x4p4x4_32_db/qca8337.c
+ *   - https://elixir.bootlin.com/linux/v5.17.3/source/drivers/net/dsa/qca8k.c
+ *   - https://lkml.kernel.org/netdev/20201202091356.24075-3-tobias@waldekranz.com/
+ */
+
 &mdio0 {
 	status = "okay";
 
@@ -1027,10 +1071,13 @@
 			0x000e4 0xea545     /* PAD_MAC_PWR_SEL */
 			0x00010 0x2613a0    /* POS */
 			0x0007c 0x4e        /* PORT0_STATUS */
+			0x0008c 0x7e        /* PORT4_STATUS */
 			0x00090 0x4e        /* PORT5_STATUS */
-			0x00094 0x4e        /* PORT6_STATUS */
-			0x00700 0x00        /* GOL_TRUNK_CTRL0 */
-			0x00704 0x00        /* GOL_TRUNK_CTRL1 */
+			0x00094 0x7e        /* PORT6_STATUS */
+			/* Trunk 1: P4 + P6 */
+			0x00700 0xd000      /* GOL_TRUNK_CTRL0 */
+			0x00704 0xec0000    /* GOL_TRUNK_CTRL1 */
+			0x00808 0x7f004e    /* QM_CTRL_REG */
 			>;
 	};
 };
@@ -1048,7 +1095,12 @@
 			0x000e0 0xc74164de  /* PAD_SGMII_CTRL */
 			0x000e4 0xaa545     /* PAD_MAC_PWR_SEL */
 			0x00010 0x2613a0    /* POS */
-			0x0007c 0x4e        /* PORT0_STATUS */
+			0x0007c 0x7e        /* PORT0_STATUS */
+			0x00090 0x7e        /* PORT5_STATUS */
+			/* Trunk 0: P0 + P5 */
+			0x00700 0xa1        /* GOL_TRUNK_CTRL0 */
+			0x00704 0xd8        /* GOL_TRUNK_CTRL1 */
+			0x00808 0x7f004e    /* QM_CTRL_REG */
 			>;
 	};
 };
