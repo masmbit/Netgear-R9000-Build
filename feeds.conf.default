@@ -1,4 +1,6 @@
-src-git-full packages https://git.openwrt.org/feed/packages.git
+#src-git-full packages https://git.openwrt.org/feed/packages.git
+src-git-full packages https://github.com/egorenar/openwrt-packages.git
+#src-link packages /home/egorenar/Repositories/openwrt-packages
 src-git-full luci https://git.openwrt.org/project/luci.git
 src-git-full routing https://git.openwrt.org/feed/routing.git
 src-git-full telephony https://git.openwrt.org/feed/telephony.git
