@@ -1144,13 +1144,12 @@
 
 		ubi {
 			label = "ubi";
-			reg = <0x02580000 0x1d280000>;
+			reg = <0x02580000 0x1ca80000>;
 		};
 
-		reserve {
-			label = "reserve";
-			reg = <0x1f800000 0x00800000>;
-			read-only;
+		recovery {
+			label = "recovery";
+			reg = <0x1f000000 0x01000000>;
 		};
 	};
 };
