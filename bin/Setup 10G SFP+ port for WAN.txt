@@ -1,0 +1,22 @@
+With MultiWAN Manger it's possible to use the SFP port as WAN
+
+To Enable:
+
+    a) Remove the eth0 (SFP) from the lan bridge
+    Network -> Interfaces -> Devices -> Configure br_lan -> Bridge ports -> uncheck eth0 -> Save & Apply
+
+    b) Create wanb and add eth0 (SFP)
+    Network -> Interfaces -> Add new interface -> set name to wanb -> select device eth0 -> Create
+    Interface
+
+    c) Set wanb firewall setting
+    Assign firewall-zone "wan" -> save -> Save & Apply
+
+    d) Enable wanb in MultiWAN Manger
+    Network -> MultiWAN Manager -> Interface -> Edit "wanb" -> check Enabled -> save -> Save & Apply
+    
+    e) Optional: Remove DNS tracking to force always on
+    Network -> MultiWAN Manager -> Interface -> Edit "wanb" -> remove the DNS IP's in "Tracking hostname or Ip address" -> save -> Save & Apply
+
+    f) reboot is required to enable correctly WAN SFP+ Port
+    System -> Reboot
