@@ -43,17 +43,18 @@ Target Profile -> NETGEAR Nighthawk XR700
 Utilities -> Shells -> bash
 Languages -> Phython -> python3-speedtest-cli
 
-LUCI -> Collections -> luci
-LUCI -> Collections -> luci-ssl
-LUCI -> 2. Moduls -> luci-compat
-LUCI -> 3. Applications -> luci-app-alpine-fan-control
-LUCI -> 3. Applications -> luci-app-cpu-status-mini
-LUCI -> 3. Applications -> luci-app-log
-LUCI -> 3. Applications -> luci-app-mwan3
-LUCI -> 3. Applications -> luci-app-netspeedtest
-LUCI -> 3. Applications -> luci-app-openvpn
-LUCI -> 3. Applications -> luci-app-temp-status
+LuCI -> 1. Collections -> luci
+LuCI -> 1. Collections -> luci-ssl
+LuCI -> 2. Moduls -> luci-compat
+LuCI -> 3. Applications -> luci-app-alpine-fan-control
+LuCI -> 3. Applications -> luci-app-cpu-status-mini
+LuCI -> 3. Applications -> luci-app-log
+LuCI -> 3. Applications -> luci-app-mwan3
+LuCI -> 3. Applications -> luci-app-netspeedtest
+LuCI -> 3. Applications -> luci-app-openvpn
+LuCI -> 3. Applications -> luci-app-temp-status
 LuCI -> 3. Applications -> luci-app-tn-netports
+LuCI -> 5. Protocols -> luci-proto-wireguard
 
 Kernel modules -> Network Devices -> kmod-be2net
 Kernel modules -> Network Devices -> kmod-macvlan
@@ -63,14 +64,13 @@ Kernel modules -> Network Support -> kmod-tun
 Kernel modules -> Netfilter Extensions -> kmod-ipt-ipset
 Kernel modules -> Netfilter Extensions -> kmod-ipt-nat
 Network -> File Transfer -> curl
-Network -> Firewall -> iptables-mod-conntrack-extra
-Network -> Firewall -> iptables-mod-ipopt
 Network -> VPN -> openvpn-openssl
 
+
 #otional
-#LUCI -> 2. Modules -> luci-mod-dashboard
-#LUCI -> 3. Applications -> luci-app-argon-config
-#LUCI -> Themes
+#LuCI -> 2. Modules -> luci-mod-dashboard
+#LuCI -> 3. Applications -> luci-app-argon-config
+#LuCI -> Themes
 
 
 
@@ -81,4 +81,3 @@ Network -> VPN -> openvpn-openssl
 make V=sc -j$(($(nproc)+1))
 
 ls -arl bin/targets/alpine/generic/
-
