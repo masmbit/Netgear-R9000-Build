@@ -42,6 +42,7 @@ Target Profile -> NETGEAR Nighthawk XR700
 
 Utilities -> Shells -> bash
 Languages -> Phython -> python3-speedtest-cli
+Libraries -> libuci-lua
 
 LuCI -> 1. Collections -> luci
 LuCI -> 1. Collections -> luci-ssl
@@ -63,8 +64,11 @@ Kernel modules -> Network Support -> kmod-nat46
 Kernel modules -> Network Support -> kmod-tun
 Kernel modules -> Netfilter Extensions -> kmod-ipt-ipset
 Kernel modules -> Netfilter Extensions -> kmod-ipt-nat
+Network -> Firewall -> iptables-mod-conntrack-extra
+Network -> Firewall -> iptables-mod-ipopt
 Network -> File Transfer -> curl
 Network -> VPN -> openvpn-openssl
+
 
 
 #otional
@@ -81,3 +85,4 @@ Network -> VPN -> openvpn-openssl
 make V=sc -j$(($(nproc)+1))
 
 ls -arl bin/targets/alpine/generic/
+
