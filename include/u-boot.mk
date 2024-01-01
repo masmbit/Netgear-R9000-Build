@@ -16,7 +16,7 @@ PKG_FLAGS:=nonshared
 PKG_LICENSE:=GPL-2.0 GPL-2.0+
 PKG_LICENSE_FILES:=Licenses/README
 
-PKG_BUILD_PARALLEL:=1
+PKG_BUILD_PARALLEL ?= 1
 
 export GCC_HONOUR_COPTS=s
 
@@ -83,6 +83,9 @@ endef
 
 define Build/Configure/U-Boot
 	+$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR) $(UBOOT_CONFIGURE_VARS) $(UBOOT_CONFIG)_config
+	$(if $(strip $(UBOOT_CUSTOMIZE_CONFIG)),
+		$(PKG_BUILD_DIR)/scripts/config --file $(PKG_BUILD_DIR)/.config $(UBOOT_CUSTOMIZE_CONFIG)
+		+$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR) $(UBOOT_CONFIGURE_VARS) oldconfig)
 endef
 
 DTC=$(wildcard $(LINUX_DIR)/scripts/dtc/dtc)

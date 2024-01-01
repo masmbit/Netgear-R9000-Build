@@ -18,6 +18,8 @@ PKG_LICENSE_FILES:=LICENSE
 PKG_MAINTAINER:=Thomas Petazzoni <thomas.petazzoni@bootlin.com>
 PKG_CPE_ID:=cpe:/a:selinuxproject:libselinux
 
+PKG_BUILD_FLAGS:=no-lto
+
 HOST_BUILD_DEPENDS:=libsepol/host musl-fts/host pcre2/host
 
 include $(INCLUDE_DIR)/package.mk
@@ -103,7 +105,7 @@ endef
 $(foreach a,$(LIBSELINUX_UTILS),$(eval $(call GenUtilPkg,libselinux-$(a),$(a))))
 
 # Needed to link libselinux utilities, which link against
-# libselinux.so, which indirectly depends on libpcre.so, installed in
+# libselinux.so, which indirectly depends on libpcre2.so, installed in
 # $(STAGING_DIR_HOSTPKG).
 HOST_LDFLAGS += -Wl,-rpath="$(STAGING_DIR_HOSTPKG)/lib"
 

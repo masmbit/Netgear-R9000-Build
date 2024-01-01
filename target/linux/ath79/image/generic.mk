@@ -9,6 +9,7 @@ DEVICE_VARS += ADDPATTERN_ID ADDPATTERN_VERSION
 DEVICE_VARS += SEAMA_SIGNATURE SEAMA_MTDBLOCK
 DEVICE_VARS += KERNEL_INITRAMFS_PREFIX DAP_SIGNATURE
 DEVICE_VARS += EDIMAX_HEADER_MAGIC EDIMAX_HEADER_MODEL
+DEVICE_VARS += MOXA_MAGIC MOXA_HWID
 DEVICE_VARS += OPENMESH_CE_TYPE ZYXEL_MODEL_STRING
 DEVICE_VARS += SUPPORTED_TELTONIKA_DEVICES
 
@@ -413,6 +414,21 @@ define Device/aruba_ap-105
 endef
 TARGET_DEVICES += aruba_ap-105
 
+define Device/aruba_ap-115
+  SOC := qca9558
+  DEVICE_VENDOR := Aruba
+  DEVICE_MODEL := AP-115
+  IMAGE_SIZE := 16000k
+  DEVICE_PACKAGES := kmod-usb2
+  LOADER_TYPE := bin
+  LOADER_FLASH_OFFS := 0x102000
+  COMPILE := loader-$(1).bin
+  COMPILE/loader-$(1).bin := loader-okli-compile
+  KERNEL := kernel-bin | append-dtb | lzma | uImage lzma -M 0x4f4b4c49 | loader-okli $(1) 8128 | uImage none
+  KERNEL_INITRAMFS := kernel-bin | append-dtb | lzma | loader-kernel
+endef
+TARGET_DEVICES += aruba_ap-115
+
 define Device/aruba_ap-175
   SOC := ar7161
   DEVICE_VENDOR := Aruba
@@ -466,6 +482,70 @@ define Device/asus_rp-ac66
 	rssileds -swconfig
 endef
 TARGET_DEVICES += asus_rp-ac66
+
+define Device/asus_qcn5502
+  SOC := qcn5502
+  DEVICE_VENDOR := ASUS
+  DEVICE_PACKAGES := kmod-ath10k-ct ath10k-firmware-qca9888-ct
+  KERNEL_INITRAMFS := kernel-bin | append-dtb | uImage none
+  IMAGES += factory.bin
+  IMAGE/factory.bin := append-kernel | pad-to $$$$(BLOCKSIZE) | \
+	append-rootfs | pad-rootfs
+endef
+
+define Device/asus_rt-ac59u
+  $(Device/asus_qcn5502)
+  DEVICE_MODEL := RT-AC59U
+  DEVICE_ALT0_VENDOR := ASUS
+  DEVICE_ALT0_MODEL := RT-AC1200GE
+  DEVICE_ALT1_VENDOR := ASUS
+  DEVICE_ALT1_MODEL := RT-AC1500G PLUS
+  DEVICE_ALT2_VENDOR := ASUS
+  DEVICE_ALT2_MODEL := RT-AC1500UHP
+  DEVICE_ALT3_VENDOR := ASUS
+  DEVICE_ALT3_MODEL := RT-AC57U
+  DEVICE_ALT3_VARIANT := v2
+  DEVICE_ALT4_VENDOR := ASUS
+  DEVICE_ALT4_MODEL := RT-AC58U
+  DEVICE_ALT4_VARIANT := v2
+  DEVICE_ALT5_VENDOR := ASUS
+  DEVICE_ALT5_MODEL := RT-ACRH12
+  IMAGE_SIZE := 16000k
+  DEVICE_PACKAGES += kmod-usb2 kmod-usb-ledtrig-usbport
+endef
+TARGET_DEVICES += asus_rt-ac59u
+
+define Device/asus_rt-ac59u-v2
+  $(Device/asus_qcn5502)
+  DEVICE_MODEL := RT-AC59U
+  DEVICE_VARIANT := v2
+  DEVICE_ALT0_VENDOR := ASUS
+  DEVICE_ALT0_MODEL := RT-AC1300G PLUS
+  DEVICE_ALT0_VARIANT := v3
+  DEVICE_ALT1_VENDOR := ASUS
+  DEVICE_ALT1_MODEL := RT-AC57U
+  DEVICE_ALT1_VARIANT := v3
+  DEVICE_ALT2_VENDOR := ASUS
+  DEVICE_ALT2_MODEL := RT-AC58U
+  DEVICE_ALT2_VARIANT := v3
+  IMAGE_SIZE := 32384k
+  DEVICE_PACKAGES += kmod-usb2 kmod-usb-ledtrig-usbport
+endef
+TARGET_DEVICES += asus_rt-ac59u-v2
+
+define Device/asus_zenwifi-cd6n
+  $(Device/asus_qcn5502)
+  DEVICE_MODEL := ZenWiFi CD6N
+  IMAGE_SIZE := 16000k
+endef
+TARGET_DEVICES += asus_zenwifi-cd6n
+
+define Device/asus_zenwifi-cd6r
+  $(Device/asus_qcn5502)
+  DEVICE_MODEL := ZenWiFi CD6R
+  IMAGE_SIZE := 32384k
+endef
+TARGET_DEVICES += asus_zenwifi-cd6r
 
 define Device/atheros_db120
   $(Device/loader-okli-uimage)
@@ -723,6 +803,17 @@ define Device/comfast_cf-e375ac
   IMAGE_SIZE := 16000k
 endef
 TARGET_DEVICES += comfast_cf-e375ac
+
+define Device/comfast_cf-e380ac-v2
+  SOC := qca9558
+  DEVICE_VENDOR := COMFAST
+  DEVICE_MODEL := CF-E380AC
+  DEVICE_VARIANT := v2
+  DEVICE_PACKAGES := kmod-usb-core kmod-usb2 \
+	kmod-ath10k-ct ath10k-firmware-qca988x-ct
+  IMAGE_SIZE := 16000k
+endef
+TARGET_DEVICES += comfast_cf-e380ac-v2
 
 define Device/comfast_cf-e5
   SOC := qca9531
@@ -1441,12 +1532,9 @@ define Device/extreme-networks_ws-ap3805i
 endef
 TARGET_DEVICES += extreme-networks_ws-ap3805i
 
-define Device/fortinet_fap-221-b
+define Device/fortinet_fap_common
   $(Device/senao_loader_okli)
-  SOC := ar9344
   DEVICE_VENDOR := Fortinet
-  DEVICE_MODEL := FAP-221-B
-  FACTORY_IMG_NAME := FP221B-9.99-AP-build999-999999-patch99
   IMAGE_SIZE := 9216k
   LOADER_FLASH_OFFS := 0x040000
   IMAGE/factory.bin := append-kernel | pad-to $$$$(BLOCKSIZE) | \
@@ -1454,6 +1542,23 @@ define Device/fortinet_fap-221-b
 	check-size | pad-to $$$$(IMAGE_SIZE) | \
 	append-loader-okli-uimage $(1) | pad-to 10944k | \
 	gzip-filename $$$$(FACTORY_IMG_NAME)
+endef
+
+define Device/fortinet_fap-220-b
+  $(Device/fortinet_fap_common)
+  SOC := ar7161
+  DEVICE_MODEL := FAP-220-B
+  FACTORY_IMG_NAME := FAP22B-9.99-AP-build999-999999-patch99
+  DEVICE_PACKAGES := -uboot-envtools kmod-usb-ohci kmod-usb2 \
+	kmod-owl-loader
+endef
+TARGET_DEVICES += fortinet_fap-220-b
+
+define Device/fortinet_fap-221-b
+  $(Device/fortinet_fap_common)
+  SOC := ar9344
+  DEVICE_MODEL := FAP-221-B
+  FACTORY_IMG_NAME := FP221B-9.99-AP-build999-999999-patch99
 endef
 TARGET_DEVICES += fortinet_fap-221-b
 
@@ -1803,6 +1908,19 @@ define Device/mercury_mw4530r-v1
   SUPPORTED_DEVICES += tl-wdr4300
 endef
 TARGET_DEVICES += mercury_mw4530r-v1
+
+define Device/moxa_awk-1137c
+  SOC := ar9344
+  DEVICE_MODEL := AWK-1137C
+  DEVICE_VENDOR := MOXA
+  MOXA_MAGIC := 0x8919123028877702
+  MOXA_HWID := 0x01080000
+  IMAGE_SIZE := 14336k
+  DEVICE_PACKAGES := uboot-envtools
+  IMAGES += factory.rom
+  IMAGE/factory.rom := $$(IMAGE/sysupgrade.bin) | moxa-encode-fw
+endef
+TARGET_DEVICES += moxa_awk-1137c
 
 define Device/nec_wx1200cr
   DEVICE_VENDOR := NEC
