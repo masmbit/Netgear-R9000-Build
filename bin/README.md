@@ -21,7 +21,9 @@ To install OpenWrt on a router for the first time, the following steps are requi
 -> on Linux
 ```
 
+
 # W I N D O W S
+
 Use [Tftpd64](https://github.com/PJO2/tftpd64) to flash the OpenWRT firmware in windows
 
 
@@ -59,7 +61,7 @@ e) select the firmware under local file
 ```
 
 
-## L I N U X
+# L I N U X
 
 
 #### Install TFTP Server
