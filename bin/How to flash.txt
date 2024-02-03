@@ -1,9 +1,17 @@
+-> If you already have OpenWRT installed on the router, you can flash the sysupgrade files directly from LuCi
+   for R9000: openwrt-alpine-generic-netgear_r9000-squashfs-sysupgrade
+   for XR700: openwrt-alpine-generic-netgear_xr700-squashfs-sysupgrade
+
+
+
+-> To install OpenWrt on a router for the first time, the following steps are required ...
+
 =================
   W I N D O W S
 =================
 
 Use tftpd64.exe to flash the OpenWRT firmware in windows
-https://pjo2.github.io/tftpd64/
+https://github.com/PJO2/tftpd64
 
 prepare TFTP
 ------------
@@ -29,6 +37,8 @@ To put the R9000 into TFTP mode.
    (When the power LED is fast white blinking, the router is in TFTP mode and ready to accept any IMG file)   
 
 5. Push the file onto the router using TFTP64.
+     for R9000: "openwrt-alpine-generic-netgear_r9000-squashfs-factory"
+     for XR700: "openwrt-alpine-generic-netgear_xr700-squashfs-factory"
    --> "Put" on TFTP
 
 6. Wait a full 5 minutes before touching the router. It should do it's update and reboot by itself. 
@@ -70,7 +80,8 @@ Send factory image to device
 
     Use a TFTP client to send a factory image from your host to device
     Only IMG files can be sent via TFTP
-    command in Linux: tftp-hpa -v -m binary 192.168.1.1 -c put openwrt-alpine-generic-netgear_xr700-squashfs-factory.img
+    command in Linux for R9000: tftp-hpa -v -m binary 192.168.1.1 -c put openwrt-alpine-generic-netgear_r9000-squashfs-factory.img
+    command in Linux for XR700: tftp-hpa -v -m binary 192.168.1.1 -c put openwrt-alpine-generic-netgear_xr700-squashfs-factory.img
     After sending IMG file to router via TFTP wait for router reboot
 
 
