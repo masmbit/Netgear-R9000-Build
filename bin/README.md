@@ -1,40 +1,42 @@
-## Download
+# Download
 
 The latest OpenWRT firmware images for Netgear R9000 and Netgear XR700
 
 * [OpenWRT Linux v6.1.69 builds for Netgear R9000 and XR700](https://github.com/masmbit/Netgear-R9000-Build/tree/master/bin/01.01.2024)
 
 
-## Install
+# Install
 
+- Upgrade
 ```
 If you already have OpenWRT installed on the router, you can flash the sysupgrade files directly from LuCi
 for R9000: openwrt-alpine-generic-netgear_r9000-squashfs-sysupgrade
 for XR700: openwrt-alpine-generic-netgear_xr700-squashfs-sysupgrade
 ```
 
-
-#### To install OpenWrt on a router for the first time, the following steps are required ...
-
+- First time
 ```
-W I N D O W S
+To install OpenWrt on a router for the first time, the following steps are required ...*
+-> on Windows
+-> on Linux
 ```
 
-Use tftpd64.exe to flash the OpenWRT firmware in windows
-https://github.com/PJO2/tftpd64
+# W I N D O W S
+Use [Tftpd64](https://github.com/PJO2/tftpd64) to flash the OpenWRT firmware in windows
 
-prepare TFTP
-------------
+
+#### prepare TFTP
+```
 a) setup lan adapter to 192.168.1.5
 b) open TFTP tool and select client mode
 c) server interfaces select 192.168.1.5
 d) set host to "192.168.1.1" and port to 69
 e) select the firmware under local file
+```
 
+#### To put the R9000 into TFTP mode.
 
-To put the R9000 into TFTP mode.
----------------------------------
-
+```
 1. Power off the router
 
 2. Hold down the reset button.
@@ -54,42 +56,41 @@ To put the R9000 into TFTP mode.
 6. Wait a full 5 minutes before touching the router. It should do it's update and reboot by itself. 
 
 7. Keep your browser open and try to load 192.168.1.1
-
-
-
-
-```
-L I N U X
 ```
 
-Install TFTP Server
 
-    On Debian and Ubuntu
-        apt-get install tftpd-hpa 
+## L I N U X
 
-    Fedora and CentOS
-	yum -y install tftp-server 
 
-Setup your host for sending factory image
+#### Install TFTP Server
+```
+On Debian and Ubuntu
+    apt-get install tftpd-hpa 
 
-    Connect PC via Ethernet cable to one of the switch ports on the router
-    Assign IP address 192.168.1.2 to host
-    Device IP address will be 192.168.1.1 in recovery mode
-
-Enter recovery mode
-
-    Power off router
-    Press and hold reset button at the back
-    Still hold the button pressed and power on router
-    Hold the button pressed for 10 seconds
-    Power LED blinks white every second
-    Router expects a firmware sent via TFTP
-    Router responds to pings to address 192.168.1.1
-
-Send factory image to device
-
-    Use a TFTP client to send a factory image from your host to device
-    Only IMG files can be sent via TFTP
-    command in Linux for R9000: tftp-hpa -v -m binary 192.168.1.1 -c put openwrt-alpine-generic-netgear_r9000-squashfs-factory.img
-    command in Linux for XR700: tftp-hpa -v -m binary 192.168.1.1 -c put openwrt-alpine-generic-netgear_xr700-squashfs-factory.img
-    After sending IMG file to router via TFTP wait for router reboot
+Fedora and CentOS
+    yum -y install tftp-server 
+```
+#### Setup your host for sending factory image
+```
+Connect PC via Ethernet cable to one of the switch ports on the router
+Assign IP address 192.168.1.2 to host
+Device IP address will be 192.168.1.1 in recovery mode
+```
+#### Enter recovery mode
+```
+Power off router
+Press and hold reset button at the back
+Still hold the button pressed and power on router
+Hold the button pressed for 10 seconds
+Power LED blinks white every second
+Router expects a firmware sent via TFTP
+Router responds to pings to address 192.168.1.1
+```
+#### Send factory image to device
+```
+Use a TFTP client to send a factory image from your host to device
+Only IMG files can be sent via TFTP
+command in Linux for R9000: tftp-hpa -v -m binary 192.168.1.1 -c put openwrt-alpine-generic-netgear_r9000-squashfs-factory.img
+command in Linux for XR700: tftp-hpa -v -m binary 192.168.1.1 -c put openwrt-alpine-generic-netgear_xr700-squashfs-factory.img
+After sending IMG file to router via TFTP wait for router reboot
+```
