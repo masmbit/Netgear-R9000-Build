@@ -94,3 +94,8 @@ command in Linux for R9000: tftp-hpa -v -m binary 192.168.1.1 -c put openwrt-alp
 command in Linux for XR700: tftp-hpa -v -m binary 192.168.1.1 -c put openwrt-alpine-generic-netgear_xr700-squashfs-factory.img
 After sending IMG file to router via TFTP wait for router reboot
 ```
+
+```
+```
+# Screenshot
+![Screenshot of OpenWRT on Netgear R9000](https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/01.01.2024/Screenshot.jpg)
