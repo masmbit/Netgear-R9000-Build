@@ -2,6 +2,8 @@
 # (1) Prepare
 # >>>>>>>>>>>>>
 
+sudo apt update
+
 git clone https://github.com/egorenar/openwrt.git R9000
 cd R9000
 git switch netgear-r9000
