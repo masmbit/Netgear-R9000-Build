@@ -2,7 +2,7 @@
 
 The latest OpenWRT firmware images for Netgear R9000 and Netgear XR700
 
-* [OpenWRT Linux v6.1.80 builds for Netgear R9000 and XR700 (15.03.2024)](https://github.com/masmbit/Netgear-R9000-Build/tree/master/bin/15.03.2024)
+* [OpenWRT Linux v6.1.80 builds for Netgear R9000 and XR700 (15.03.2024)](https://github.com/masmbit/Netgear-R9000-Build/tree/master/bin/01.09.2024)
 
 
 # Install
