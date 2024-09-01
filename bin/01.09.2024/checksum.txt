@@ -1,0 +1,8 @@
+   File: openwrt-alpine-generic-netgear_r9000-squashfs-factory_(Linux-v6.6.47_01.09.2024).img.zip
+     MD5: 58e0549e6c468f5e7c7c93e3ae31a2b6
+   File: openwrt-alpine-generic-netgear_r9000-squashfs-sysupgrade_(Linux-v6.6.47_01.09.2024).bin.zip
+     MD5: 3ff50216e8aead6ec4f431678ac18275
+   File: openwrt-alpine-generic-netgear_xr700-squashfs-factory_(Linux-v6.6.47_01.09.2024).img.zip
+     MD5: a42b8d1b6a7f35546069f0ba904bd601
+   File: openwrt-alpine-generic-netgear_xr700-squashfs-sysupgrade_(Linux-v6.6.47_01.09.2024).bin.zip
+     MD5: c7417924b94980c1af58d02271b562a6
