@@ -100,4 +100,7 @@ After sending IMG file to router via TFTP wait for router reboot
 ```
 ```
 # Screenshot
-![Screenshot of OpenWRT on Netgear R9000](https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/15.03.2024/Screenshot.jpg)
+![Screenshot of OpenWRT on Netgear R9000](https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/01.09.2024/screenshot.jpg)
+
+# Screenshot with Argon Theme
+![Screenshot of OpenWRT on Netgear R9000](https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/01.09.2024/screenshot2.jpg)
