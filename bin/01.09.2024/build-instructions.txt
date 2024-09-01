@@ -1,0 +1,99 @@
+# >>>>>>>>>>>>>
+# (1) Prepare
+# >>>>>>>>>>>>>
+
+sudo apt update
+sudo apt-get upgrade
+
+git clone https://github.com/egorenar/openwrt.git R9000
+cd R9000
+git switch netgear-r9000
+
+echo "src-git alpinefancontrol https://github.com/hurrian/openwrt-alpine-fan-control.git" >> feeds.conf.default
+git clone --depth 1 --branch master --single-branch --no-tags --recurse-submodules https://github.com/fantastic-packages/packages package/fantastic-packages
+
+# >>> add the 10G SFP Port (eth0) to the LAN; enable the LED of the 10G SFP Port <<<
+echo "uci set network.@device[0].ports='eth0'; uci add_list network.@device[0].ports='eth1.1'; uci commit network;" > target/linux/alpine/base-files/etc/uci-defaults/99-sfp-port
+echo "uci -q delete system.@led[0]; uci add system led; uci set system.@led[0].name='SFP'; uci set system.@led[0].sysfs='white:sfp'; uci set system.@led[0].trigger='netdev'; uci set system.@led[0].dev='eth0'; uci set system.@led[0].mode='link'; uci add_list system.@led[0].mode='tx'; uci add_list system.@led[0].mode='rx'; uci commit system;" >> target/linux/alpine/base-files/etc/uci-defaults/99-sfp-port
+
+# >>> add Network Interfaces Ports Status <<<
+echo "uci set wireless.default_radio0.ifname='60GHz-radio0'; uci set wireless.default_radio1.ifname='5GHz-radio1'; uci set wireless.default_radio2.ifname='2.4GHz-radio2'; uci commit wireless;" > target/linux/alpine/base-files/etc/uci-defaults/98-netports
+printf "printf \"config global 'global'\\\n\\\toption default_additional_info '1'\\\n\\\toption default_h_mode '1'\\\n\\\toption hv_mode_switch_button '1'\\\n\\\n\" > /etc/config/luci_netports\n" >> target/linux/alpine/base-files/etc/uci-defaults/98-netports
+printf "printf \"config port\\\n\\\toption ifname 'eth2.2'\\\n\\\toption name 'WAN'\\\n\\\toption type 'copper'\\\n\\\nconfig port\\\n\\\toption ifname 'eth0'\\\n\\\toption name 'SFP+'\\\n\\\toption type 'sfp'\\\n\\\nconfig port\\\n\\\toption ifname 'eth1.1'\\\n\\\toption name 'LAN 1-6'\\\n\\\toption type 'copper'\\\n\\\n\" >> /etc/config/luci_netports\n" >> target/linux/alpine/base-files/etc/uci-defaults/98-netports
+printf "printf \"config port\\\n\\\toption ifname '60GHz-radio0'\\\n\\\toption name 'WLAN 60GHz'\\\n\\\toption type 'wifi'\\\n\\\nconfig port\\\n\\\toption ifname '5GHz-radio1'\\\n\\\toption name 'WLAN 5GHz'\\\n\\\toption type 'wifi'\\\n\\\nconfig port\\\n\\\toption ifname '2.4GHz-radio2'\\\n\\\toption name 'WLAN 2.4GHz'\\\n\\\toption type 'wifi'\\\n\\\n\" >> /etc/config/luci_netports\n" >> target/linux/alpine/base-files/etc/uci-defaults/98-netports
+
+# >>> remove wrong wifi entry in xx_customizations <<<
+echo exit 0 > target/linux/alpine/base-files/etc/uci-defaults/xx_customizations
+
+# >>> patch al_hal_serdes.c <<<
+wget -N https://raw.githubusercontent.com/masmbit/Netgear-R9000-Build/master/bin/01.09.2024/patch/al_hal_serdes.patch -P target/linux/alpine/files/arch/arm/mach-alpine/
+patch -N target/linux/alpine/files/arch/arm/mach-alpine/al_hal_serdes.c target/linux/alpine/files/arch/arm/mach-alpine/al_hal_serdes.patch
+# >>> patch al_init_eth_kr.c <<<
+wget -N https://raw.githubusercontent.com/masmbit/Netgear-R9000-Build/master/bin/01.09.2024/patch/al_init_eth_kr.patch -P target/linux/alpine/files/drivers/net/ethernet/al/
+patch -N target/linux/alpine/files/drivers/net/ethernet/al/al_init_eth_kr.c target/linux/alpine/files/drivers/net/ethernet/al/al_init_eth_kr.patch
+# >>> patch freeswitch Makefile <<<
+wget -N https://raw.githubusercontent.com/masmbit/Netgear-R9000-Build/master/bin/01.09.2024/patch/freeswitch.Makefile.patch -P package/feeds/telephony/freeswitch/
+patch -N package/feeds/telephony/freeswitch/Makefile package/feeds/telephony/freeswitch/freeswitch.Makefile.patch
+
+
+./scripts/feeds update -a
+./scripts/feeds install -a
+
+echo "CONFIG_TARGET_alpine=y" >> .config
+echo "CONFIG_TARGET_BOARD=alpine" >> .config
+
+make menuconfig
+
+
+# >>>>>>>>>>>>>>>>>>>>>>>>
+# (2) Select in menuconfig
+# >>>>>>>>>>>>>>>>>>>>>>>>
+
+Target Profile -> NETGEAR Nighthawk X10 R9000
+  -- or  --
+Target Profile -> NETGEAR Nighthawk XR700
+
+
+Utilities -> Shells -> bash
+Languages -> Phython -> python3-speedtest-cli
+Libraries -> libuci-lua
+Libraries -> libpcre2
+
+LuCI -> 1. Collections -> luci
+LuCI -> 1. Collections -> luci-ssl
+LuCI -> 2. Moduls -> luci-compat
+LuCI -> 3. Applications -> luci-app-alpine-fan-Control
+LuCI -> 3. Applications -> luci-app-argon-config
+LuCI -> 3. Applications -> luci-app-cpu-status-mini
+LuCI -> 3. Applications -> luci-app-log-viewer
+LuCI -> 3. Applications -> luci-app-mwan3
+LuCI -> 3. Applications -> luci-app-netspeedtest
+LuCI -> 3. Applications -> luci-app-openvpn
+LuCI -> 3. Applications -> luci-app-temp-status
+LuCI -> 3. Applications -> luci-app-tn-netports
+LuCI -> 5. Protocols -> luci-proto-wireguard
+
+Kernel modules -> Network Devices -> kmod-be2net
+Kernel modules -> Network Devices -> kmod-macvlan
+Kernel modules -> Network Devices -> kmod-sfp
+Kernel modules -> Network Support -> kmod-nat46
+Kernel modules -> Network Support -> kmod-tun
+Kernel modules -> Netfilter Extensions -> kmod-ipt-ipset
+Kernel modules -> Netfilter Extensions -> kmod-ipt-nat
+Network -> Firewall -> iptables-mod-conntrack-extra
+Network -> Firewall -> iptables-mod-ipopt
+Network -> File Transfer -> curl
+Network -> VPN -> openvpn-openssl
+
+
+
+
+# >>>>>>>>>>>>>>>>>>>>>
+# (3) Start compiling
+# >>>>>>>>>>>>>>>>>>>>>
+
+make V=sc -j$(($(nproc)+1))
+
+
+ls -arl bin/targets/alpine/generic/
+
