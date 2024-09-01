@@ -1,0 +1,11 @@
+--- freeswitch.Makefile	2024-08-31 18:51:17.287827304 -0400
++++ freeswitch.fixed.Makefile	2024-08-31 10:16:59.890897060 -0400
+@@ -320,7 +320,7 @@
+ 	  +libcurl \
+ 	  +libedit \
+ 	  +libopenssl \
+-	  +libpcre \
++	  +libpcre2 \
+ 	  +libpthread \
+ 	  +librt \
+ 	  +libspandsp3 \
