@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/README.md</title>
+</head>
+
+<body style="font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif'">
+<div dir="auto">
+  <h1 tabindex="-1" dir="auto">Download</h1>
+  <a id="user-content-download" aria-label="Permalink: Download" href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/README.md#download"></a></div>
+<p dir="auto">The latest OpenWRT firmware images for Netgear R9000 and Netgear XR700</p>
+<ul dir="auto">
+  <li><a href="https://github.com/masmbit/Netgear-R9000-Build/tree/master/bin/01.09.2024">OpenWRT Linux v6.6.47 builds for Netgear R9000 and XR700 (01.09.2024)</a></li>
+</ul>
+<div dir="auto">
+  <h1 tabindex="-1" dir="auto">Install</h1>
+  <a id="user-content-install" aria-label="Permalink: Install" href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/README.md#install"></a></div>
+<ul dir="auto">
+  <li>Upgrade</li>
+</ul>
+<div>
+  <pre>If you already have OpenWRT installed on the router, you can flash the sysupgrade files directly from LuCi  for R9000: openwrt-alpine-generic-netgear_r9000-squashfs-sysupgrade  for XR700: openwrt-alpine-generic-netgear_xr700-squashfs-sysupgrade  </pre>
+  <div> </div>
+</div>
+<ul dir="auto">
+  <li>First time</li>
+</ul>
+<div>
+  <pre>To install OpenWrt on a router for the first time, the following steps are required ...*  -&gt; on Windows  -&gt; on Linux  </pre>
+  <div> </div>
+</div>
+<div dir="auto">
+  <h1 tabindex="-1" dir="auto">W I N D O W S</h1>
+  <a id="user-content-w-i-n-d-o-w-s" aria-label="Permalink: W I N D O W S" href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/README.md#w-i-n-d-o-w-s"></a></div>
+<p dir="auto">Use <a href="https://github.com/PJO2/tftpd64">Tftpd64</a> to flash the OpenWRT firmware in windows</p>
+<div dir="auto">
+  <h4 tabindex="-1" dir="auto">prepare TFTP</h4>
+  <a id="user-content-prepare-tftp" aria-label="Permalink: prepare TFTP" href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/README.md#prepare-tftp"></a></div>
+<pre>a) setup lan adapter to 192.168.1.5  b) open TFTP tool and select client mode  c) server interfaces select 192.168.1.5  d) set host to "192.168.1.1" and port to 69  e) select the firmware under local file  </pre>
+<div> </div>
+<div dir="auto">
+  <h4 tabindex="-1" dir="auto">To put the R9000 into TFTP mode.</h4>
+  <a id="user-content-to-put-the-r9000-into-tftp-mode" aria-label="Permalink: To put the R9000 into TFTP mode." href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/README.md#to-put-the-r9000-into-tftp-mode"></a></div>
+<pre>1. Power off the router    2. Hold down the reset button.    3. Power on the router and keep holding down the reset button.    4. When the router first boots the power led flashes orange and then it will switch to a slow white flash.     Keep holding down reset button. The slow white flash will change to a faster white flash and then to a second even faster white flash.     Let it blink 3-4 on the second set of faster white flashes and let go of the reset button and now send the IMG file via TFTP.     (When the power LED is fast white blinking, the router is in TFTP mode and ready to accept any IMG file)       5. Push the file onto the router using TFTP64.       for R9000: "openwrt-alpine-generic-netgear_r9000-squashfs-factory"       for XR700: "openwrt-alpine-generic-netgear_xr700-squashfs-factory"     --&gt; "Put" on TFTP    6. Wait a full 5 minutes before touching the router. It should do it's update and reboot by itself.     7. Keep your browser open and try to load 192.168.1.1  </pre>
+<div> </div>
+<div dir="auto">
+  <h1 tabindex="-1" dir="auto">L I N U X</h1>
+  <a id="user-content-l-i-n-u-x" aria-label="Permalink: L I N U X" href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/README.md#l-i-n-u-x"></a></div>
+<div dir="auto">
+  <h4 tabindex="-1" dir="auto">Install TFTP Server</h4>
+  <a id="user-content-install-tftp-server" aria-label="Permalink: Install TFTP Server" href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/README.md#install-tftp-server"></a></div>
+<pre>On Debian and Ubuntu      apt-get install tftpd-hpa     Fedora and CentOS      yum -y install tftp-server   </pre>
+<div> </div>
+<div dir="auto">
+  <h4 tabindex="-1" dir="auto">Setup your host for sending factory image</h4>
+  <a id="user-content-setup-your-host-for-sending-factory-image" aria-label="Permalink: Setup your host for sending factory image" href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/README.md#setup-your-host-for-sending-factory-image"></a></div>
+<pre>Connect PC via Ethernet cable to one of the switch ports on the router  Assign IP address 192.168.1.2 to host  Device IP address will be 192.168.1.1 in recovery mode  </pre>
+<div> </div>
+<div dir="auto">
+  <h4 tabindex="-1" dir="auto">Enter recovery mode</h4>
+  <a id="user-content-enter-recovery-mode" aria-label="Permalink: Enter recovery mode" href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/README.md#enter-recovery-mode"></a></div>
+<pre>Power off router  Press and hold reset button at the back  Still hold the button pressed and power on router  Hold the button pressed for 10 seconds  Power LED blinks white every second  Router expects a firmware sent via TFTP  Router responds to pings to address 192.168.1.1  </pre>
+<div> </div>
+<div dir="auto">
+  <h4 tabindex="-1" dir="auto">Send factory image to device</h4>
+  <a id="user-content-send-factory-image-to-device" aria-label="Permalink: Send factory image to device" href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/README.md#send-factory-image-to-device"></a></div>
+<pre>Use a TFTP client to send a factory image from your host to device  Only IMG files can be sent via TFTP  command in Linux for R9000: tftp-hpa -v -m binary 192.168.1.1 -c put openwrt-alpine-generic-netgear_r9000-squashfs-factory.img  command in Linux for XR700: tftp-hpa -v -m binary 192.168.1.1 -c put openwrt-alpine-generic-netgear_xr700-squashfs-factory.img  After sending IMG file to router via TFTP wait for router reboot  </pre>
+<div> </div>
+<pre></pre>
+<div> </div>
+<div dir="auto">
+  <h1 tabindex="-1" dir="auto">Screenshot</h1>
+  <a id="user-content-screenshot" aria-label="Permalink: Screenshot" href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/README.md#screenshot"></a></div>
+<p dir="auto"><a target="_blank" rel="noopener noreferrer" href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/01.09.2024/screenshot.jpg"><img src="https://github.com/masmbit/Netgear-R9000-Build/raw/master/bin/01.09.2024/screenshot.jpg" alt="Screenshot of OpenWRT on Netgear R9000"></a></p>
+<div dir="auto">
+  <h1 tabindex="-1" dir="auto">Screenshot with Argon Theme</h1>
+  <a id="user-content-screenshot-with-argon-theme" aria-label="Permalink: Screenshot with Argon Theme" href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/README.md#screenshot-with-argon-theme"></a></div>
+<p dir="auto"><a target="_blank" rel="noopener noreferrer" href="https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/01.09.2024/screenshot2.jpg"><img src="https://github.com/masmbit/Netgear-R9000-Build/raw/master/bin/01.09.2024/screenshot2.jpg" alt="Screenshot of OpenWRT on Netgear R9000"></a></p>
+</body>
+</html>
