@@ -26,14 +26,11 @@ printf "printf \"config port\\\n\\\toption ifname '60GHz-radio0'\\\n\\\toption n
 echo exit 0 > target/linux/alpine/base-files/etc/uci-defaults/xx_customizations
 
 # >>> patch al_hal_serdes.c <<<
-wget -N https://raw.githubusercontent.com/masmbit/Netgear-R9000-Build/master/bin/01.09.2024/patch/al_hal_serdes.patch -P target/linux/alpine/files/arch/arm/mach-alpine/
+wget -N https://raw.githubusercontent.com/masmbit/Netgear-R9000-Build/master/bin/13.02.2025/patch/al_hal_serdes.patch -P target/linux/alpine/files/arch/arm/mach-alpine/
 patch -N target/linux/alpine/files/arch/arm/mach-alpine/al_hal_serdes.c target/linux/alpine/files/arch/arm/mach-alpine/al_hal_serdes.patch
 # >>> patch al_init_eth_kr.c <<<
-wget -N https://raw.githubusercontent.com/masmbit/Netgear-R9000-Build/master/bin/01.09.2024/patch/al_init_eth_kr.patch -P target/linux/alpine/files/drivers/net/ethernet/al/
+wget -N https://raw.githubusercontent.com/masmbit/Netgear-R9000-Build/master/bin/13.02.2025/patch/al_init_eth_kr.patch -P target/linux/alpine/files/drivers/net/ethernet/al/
 patch -N target/linux/alpine/files/drivers/net/ethernet/al/al_init_eth_kr.c target/linux/alpine/files/drivers/net/ethernet/al/al_init_eth_kr.patch
-# >>> patch freeswitch Makefile <<<
-wget -N https://raw.githubusercontent.com/masmbit/Netgear-R9000-Build/master/bin/01.09.2024/patch/freeswitch.Makefile.patch -P package/feeds/telephony/freeswitch/
-patch -N package/feeds/telephony/freeswitch/Makefile package/feeds/telephony/freeswitch/freeswitch.Makefile.patch
 
 
 ./scripts/feeds update -a
@@ -56,8 +53,8 @@ Target Profile -> NETGEAR Nighthawk XR700
 
 Utilities -> Shells -> bash
 Languages -> Phython -> python3-speedtest-cli
-Libraries -> libuci-lua
 Libraries -> libpcre2
+Libraries -> libuci-lua
 
 LuCI -> 1. Collections -> luci
 LuCI -> 1. Collections -> luci-ssl
