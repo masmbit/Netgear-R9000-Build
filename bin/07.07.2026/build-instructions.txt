@@ -60,6 +60,9 @@ printf "printf \"config global 'global'\\\n\\\toption default_additional_info '1
 printf "printf \"config port\\\n\\\toption ifname 'eth2.2'\\\n\\\toption name 'WAN'\\\n\\\toption type 'copper'\\\n\\\nconfig port\\\n\\\toption ifname 'eth0'\\\n\\\toption name 'SFP+'\\\n\\\toption type 'sfp'\\\n\\\nconfig port\\\n\\\toption ifname 'eth1.1'\\\n\\\toption name 'LAN 1-6'\\\n\\\toption type 'copper'\\\n\\\n\" >> /etc/config/luci_netports\n" >> target/linux/alpine/base-files/etc/uci-defaults/98-netports
 printf "printf \"config port\\\n\\\toption ifname '60GHz-radio0'\\\n\\\toption name 'WLAN 60GHz'\\\n\\\toption type 'wifi'\\\n\\\nconfig port\\\n\\\toption ifname '5GHz-radio1'\\\n\\\toption name 'WLAN 5GHz'\\\n\\\toption type 'wifi'\\\n\\\nconfig port\\\n\\\toption ifname '2.4GHz-radio2'\\\n\\\toption name 'WLAN 2.4GHz'\\\n\\\toption type 'wifi'\\\n\\\n\" >> /etc/config/luci_netports\n" >> target/linux/alpine/base-files/etc/uci-defaults/98-netports
 
+# >>> add usb automount <<<
+echo "uci set fstab.@global[0].anon_mount='1'; uci set fstab.@global[0].auto_mount='1'; uci commit fstab;" > target/linux/alpine/base-files/etc/uci-defaults/99-usb-automount
+
 # >>> remove wrong wifi entry in xx_customizations <<<
 echo exit 0 > target/linux/alpine/base-files/etc/uci-defaults/xx_customizations
 
