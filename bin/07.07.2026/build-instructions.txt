@@ -73,7 +73,7 @@ patch -N target/linux/alpine/files/arch/arm/mach-alpine/al_hal_serdes.c target/l
 wget -N https://raw.githubusercontent.com/masmbit/Netgear-R9000-Build/master/bin/07.07.2026/patch/al_init_eth_kr.patch -P target/linux/alpine/files/drivers/net/ethernet/al/
 patch -N target/linux/alpine/files/drivers/net/ethernet/al/al_init_eth_kr.c target/linux/alpine/files/drivers/net/ethernet/al/al_init_eth_kr.patch
 # >>> patch cron loglevel (syslog fix for BusyBox) <<<
-wget -N https://raw.githubusercontent.com/masmbit/Netgear-R9000-Build/master/bin/07.06.2026/patch/cron.patch -P package/utils/busybox/files/
+wget -N https://raw.githubusercontent.com/masmbit/Netgear-R9000-Build/master/bin/07.07.2026/patch/cron.patch -P package/utils/busybox/files/
 patch -N package/utils/busybox/files/cron package/utils/busybox/files/cron.patch
 
 
