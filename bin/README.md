@@ -2,7 +2,7 @@
 
 The latest OpenWRT firmware images for Netgear R9000 and Netgear XR700
 
-* [OpenWRT Linux v6.6.63 builds for Netgear R9000 and XR700 (13.02.2025)](https://github.com/masmbit/Netgear-R9000-Build/tree/master/bin/13.02.2025)
+* [OpenWRT Linux v6.6.63 builds for Netgear R9000 and XR700 (07.07.2026)](https://github.com/masmbit/Netgear-R9000-Build/tree/master/bin/07.07.2026)
 
 
 # Install
@@ -100,7 +100,7 @@ After sending IMG file to router via TFTP wait for router reboot
 ```
 ```
 # Screenshot
-![Screenshot of OpenWRT on Netgear R9000](https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/13.02.2025/screenshot.jpg)
+![Screenshot of OpenWRT on Netgear R9000](https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/07.07.2026/screenshot.jpg)
 
 # Screenshot with Argon Theme
-![Screenshot of OpenWRT on Netgear R9000](https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/13.02.2025/screenshot2.jpg)
+![Screenshot of OpenWRT on Netgear R9000](https://github.com/masmbit/Netgear-R9000-Build/blob/master/bin/07.07.2026/screenshot2.jpg)
