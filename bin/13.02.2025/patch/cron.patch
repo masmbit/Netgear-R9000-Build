@@ -1,0 +1,7 @@
+--- a/package/utils/busybox/files/cron
++++ b/package/utils/busybox/files/cron
+@@ -31,3 +31,3 @@
+ 	procd_open_instance
+-	procd_set_param command "$PROG" -f -c /etc/crontabs -l "${loglevel:-7}"
++	procd_set_param command "$PROG" -f -c /etc/crontabs -l "${loglevel:-7}" -L /dev/null
+ 	for crontab in /etc/crontabs/*; do
